@@ -1,0 +1,20 @@
+{
+  "appTitle": "Game of Thrones characters",
+  "searchHint": "Search by name",
+  "nothingFound": "Nothing found",
+  "tryAnotherQuery": "Try another query",
+  "characterNotFound": "Character not found",
+  "aliases": "Aliases",
+  "titles": "Titles",
+  "culture": "Culture",
+  "gender": "Gender",
+  "born": "Born",
+  "playedBy": "Played by",
+  "relatedCharacter": "Related character",
+  "unknown": "Unknown",
+  "male": "Male",
+  "female": "Female",
+  "changeTheme": "Change theme",
+  "changeLanguage": "Change language",
+  "back": "Back"
+}
