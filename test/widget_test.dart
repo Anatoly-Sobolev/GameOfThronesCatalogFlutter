@@ -22,6 +22,20 @@ void main() {
     expect(find.text('Jon Snow'), findsNothing);
   });
 
+  testWidgets('updates localized titles after locale change', (tester) async {
+    await tester.pumpWidget(
+      const GameOfThronesApp(initialLocale: Locale('ru')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Персонажи Игры престолов'), findsOneWidget);
+
+    await tester.tap(find.text('EN'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Game of Thrones characters'), findsOneWidget);
+  });
+
   test('loads a real father relation from the model', () async {
     final cubit = CharacterDetailCubit(CharacterRepository())..load(5);
 

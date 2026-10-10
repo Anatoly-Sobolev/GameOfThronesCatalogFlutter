@@ -70,4 +70,5 @@ flutter run -d chrome --dart-define=LOCALE=en
 ```shell
 flutter analyze
 flutter test
+dart run tool/check_arb.dart
 ```
