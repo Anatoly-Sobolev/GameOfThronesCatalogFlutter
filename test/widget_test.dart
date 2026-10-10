@@ -37,7 +37,8 @@ void main() {
   });
 
   test('loads a real father relation from the model', () async {
-    final cubit = CharacterDetailCubit(CharacterRepository())..load(5);
+    final cubit = CharacterDetailCubit(CharacterRepository());
+    await cubit.load(5);
 
     expect(cubit.state.character?.name, 'Sansa Stark');
     expect(cubit.state.father?.name, 'Eddard Stark');

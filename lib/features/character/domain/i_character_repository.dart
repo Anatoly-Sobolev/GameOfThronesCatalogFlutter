@@ -1,7 +1,7 @@
 import 'character_model.dart';
 
 abstract interface class ICharacterRepository {
-  List<CharacterModel> getCharacters();
+  Future<List<CharacterModel>> getCharacters({String query = ''});
 
-  CharacterModel? getCharacterById(int id);
+  Future<CharacterModel?> getCharacterById(int id);
 }

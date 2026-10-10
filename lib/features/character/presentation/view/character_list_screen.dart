@@ -78,12 +78,11 @@ class _CharacterListContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context)!;
 
-    if (state.status != CharacterListStatus.success) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (state.characters.isEmpty) {
-      return Center(
+    return switch (state) {
+      CharacterListLoading() => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      CharacterListNotFound() => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -97,17 +96,19 @@ class _CharacterListContent extends StatelessWidget {
             Text(strings.tryAnotherQuery),
           ],
         ),
-      );
-    }
-
-    return ListView.separated(
-      key: const PageStorageKey('character-list'),
-      itemCount: state.characters.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
-        final character = state.characters[index];
-        return CharacterCard(key: ValueKey(character.id), character: character);
-      },
-    );
+      ),
+      CharacterListLoaded(:final characters) => ListView.separated(
+        key: const PageStorageKey('character-list'),
+        itemCount: characters.length,
+        separatorBuilder: (context, index) => const SizedBox(height: 12),
+        itemBuilder: (context, index) {
+          final character = characters[index];
+          return CharacterCard(
+            key: ValueKey(character.id),
+            character: character,
+          );
+        },
+      ),
+    };
   }
 }
