@@ -1,15 +1,22 @@
 import '../../../domain/character_model.dart';
 
-enum CharacterDetailStatus { loading, success, notFound }
+sealed class CharacterDetailState {
+  const CharacterDetailState();
+}
 
-class CharacterDetailState {
-  const CharacterDetailState({
-    this.status = CharacterDetailStatus.loading,
-    this.character,
-    this.father,
-  });
+final class CharacterDetailLoading extends CharacterDetailState {
+  const CharacterDetailLoading();
+}
 
-  final CharacterDetailStatus status;
-  final CharacterModel? character;
+final class CharacterDetailLoaded extends CharacterDetailState {
+  const CharacterDetailLoaded(this.character, {this.father});
+
+  final CharacterModel character;
   final CharacterModel? father;
+}
+
+final class CharacterDetailNotFound extends CharacterDetailState {
+  const CharacterDetailNotFound(this.id);
+
+  final int id;
 }

@@ -17,30 +17,23 @@ class CharacterDetailScreen extends StatelessWidget {
     final strings = AppLocalizations.of(context)!;
 
     return BlocBuilder<CharacterDetailCubit, CharacterDetailState>(
-      builder: (context, state) {
-        if (state.status == CharacterDetailStatus.loading) {
-          return AppScaffold(
-            title: strings.appTitle,
-            showBackButton: true,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final character = state.character;
-        if (character == null) {
-          return AppScaffold(
-            title: strings.characterNotFound,
-            showBackButton: true,
-            body: Center(
-              child: Text(
-                strings.characterNotFound,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+      builder: (context, state) => switch (state) {
+        CharacterDetailLoading() => AppScaffold(
+          title: strings.appTitle,
+          showBackButton: true,
+          body: const Center(child: CircularProgressIndicator()),
+        ),
+        CharacterDetailNotFound() => AppScaffold(
+          title: strings.characterNotFound,
+          showBackButton: true,
+          body: Center(
+            child: Text(
+              strings.characterNotFound,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-          );
-        }
-
-        return AppScaffold(
+          ),
+        ),
+        CharacterDetailLoaded(:final character, :final father) => AppScaffold(
           title: character.name,
           showBackButton: true,
           body: ListView(
@@ -73,14 +66,11 @@ class CharacterDetailScreen extends StatelessWidget {
                 value: _listOrUnknown(character.playedBy, strings.unknown),
               ),
               const SizedBox(height: 20),
-              if (state.father != null)
-                _RelatedCharacterCard(
-                  character: state.father!,
-                  title: strings.father,
-                ),
+              if (father != null)
+                _RelatedCharacterCard(character: father, title: strings.father),
             ],
           ),
-        );
+        ),
       },
     );
   }

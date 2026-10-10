@@ -4,7 +4,8 @@ import '../../../domain/i_character_repository.dart';
 import 'character_detail_state.dart';
 
 class CharacterDetailCubit extends Cubit<CharacterDetailState> {
-  CharacterDetailCubit(this._repository) : super(const CharacterDetailState());
+  CharacterDetailCubit(this._repository)
+    : super(const CharacterDetailLoading());
 
   final ICharacterRepository _repository;
 
@@ -14,24 +15,19 @@ class CharacterDetailCubit extends Cubit<CharacterDetailState> {
       if (isClosed) {
         return;
       }
-      emit(const CharacterDetailState(status: CharacterDetailStatus.notFound));
+      emit(CharacterDetailNotFound(id));
       return;
     }
 
-    final father = character.fatherId == null
+    final fatherId = character.fatherId;
+    final father = fatherId == null
         ? null
-        : await _repository.getCharacterById(character.fatherId!);
+        : await _repository.getCharacterById(fatherId);
 
     if (isClosed) {
       return;
     }
 
-    emit(
-      CharacterDetailState(
-        status: CharacterDetailStatus.success,
-        character: character,
-        father: father,
-      ),
-    );
+    emit(CharacterDetailLoaded(character, father: father));
   }
 }
