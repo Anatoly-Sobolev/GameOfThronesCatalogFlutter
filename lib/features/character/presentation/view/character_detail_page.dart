@@ -8,14 +8,14 @@ import 'character_detail_screen.dart';
 class CharacterDetailPage extends StatelessWidget {
   const CharacterDetailPage({required this.characterId, super.key});
 
-  final int? characterId;
+  final int characterId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
           CharacterDetailCubit(context.read<ICharacterRepository>())
-            ..load(characterId ?? -1),
+            ..load(characterId),
       child: const CharacterDetailScreen(),
     );
   }
