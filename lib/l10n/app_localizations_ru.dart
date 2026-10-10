@@ -59,7 +59,4 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get changeLanguage => 'Сменить язык';
-
-  @override
-  String get back => 'Назад';
 }

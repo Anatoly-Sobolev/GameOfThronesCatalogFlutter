@@ -199,12 +199,6 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Сменить язык'**
   String get changeLanguage;
-
-  /// No description provided for @back.
-  ///
-  /// In ru, this message translates to:
-  /// **'Назад'**
-  String get back;
 }
 
 class _AppLocalizationsDelegate
