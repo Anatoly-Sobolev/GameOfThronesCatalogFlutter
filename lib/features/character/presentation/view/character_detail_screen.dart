@@ -7,6 +7,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/character_model.dart';
 import '../bloc/detail/character_detail_cubit.dart';
 import '../bloc/detail/character_detail_state.dart';
+import '../utils/character_format.dart';
 import 'widgets/character_avatar.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
@@ -43,27 +44,27 @@ class CharacterDetailScreen extends StatelessWidget {
               const SizedBox(height: 24),
               _DetailRow(
                 label: strings.gender,
-                value: _genderText(character.gender, strings),
+                value: character.gender.genderLabel(strings),
               ),
               _DetailRow(
                 label: strings.culture,
-                value: _valueOrUnknown(character.culture, strings.unknown),
+                value: character.culture.valueOrUnknown(strings),
               ),
               _DetailRow(
                 label: strings.born,
-                value: _valueOrUnknown(character.born, strings.unknown),
+                value: character.born.valueOrUnknown(strings),
               ),
               _DetailRow(
                 label: strings.titles,
-                value: _listOrUnknown(character.titles, strings.unknown),
+                value: character.titles.valuesOrUnknown(strings),
               ),
               _DetailRow(
                 label: strings.aliases,
-                value: _listOrUnknown(character.aliases, strings.unknown),
+                value: character.aliases.valuesOrUnknown(strings),
               ),
               _DetailRow(
                 label: strings.playedBy,
-                value: _listOrUnknown(character.playedBy, strings.unknown),
+                value: character.playedBy.valuesOrUnknown(strings),
               ),
               const SizedBox(height: 20),
               if (father != null)
@@ -73,27 +74,6 @@ class CharacterDetailScreen extends StatelessWidget {
         ),
       },
     );
-  }
-
-  String _genderText(String value, AppLocalizations strings) {
-    if (value == 'Male') {
-      return strings.male;
-    }
-    if (value == 'Female') {
-      return strings.female;
-    }
-    return strings.unknown;
-  }
-
-  String _valueOrUnknown(String value, String unknown) {
-    if (value.isEmpty || value == 'Unknown') {
-      return unknown;
-    }
-    return value;
-  }
-
-  String _listOrUnknown(List<String> values, String unknown) {
-    return values.isEmpty ? unknown : values.join(', ');
   }
 }
 
