@@ -43,7 +43,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playedBy => 'Played by';
 
   @override
-  String get relatedCharacter => 'Related character';
+  String get father => 'Father';
 
   @override
   String get unknown => 'Unknown';

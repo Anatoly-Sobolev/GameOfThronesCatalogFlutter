@@ -43,7 +43,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get playedBy => 'Актёр';
 
   @override
-  String get relatedCharacter => 'Связанный персонаж';
+  String get father => 'Отец';
 
   @override
   String get unknown => 'Неизвестно';

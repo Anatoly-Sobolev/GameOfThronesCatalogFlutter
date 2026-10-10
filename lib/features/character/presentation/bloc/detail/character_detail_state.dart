@@ -1,4 +1,4 @@
-import '../../domain/character_model.dart';
+import '../../../domain/character_model.dart';
 
 enum CharacterDetailStatus { loading, success, notFound }
 
@@ -6,10 +6,10 @@ class CharacterDetailState {
   const CharacterDetailState({
     this.status = CharacterDetailStatus.loading,
     this.character,
-    this.relatedCharacter,
+    this.father,
   });
 
   final CharacterDetailStatus status;
   final CharacterModel? character;
-  final CharacterModel? relatedCharacter;
+  final CharacterModel? father;
 }

@@ -164,11 +164,11 @@ abstract class AppLocalizations {
   /// **'Актёр'**
   String get playedBy;
 
-  /// No description provided for @relatedCharacter.
+  /// No description provided for @father.
   ///
   /// In ru, this message translates to:
-  /// **'Связанный персонаж'**
-  String get relatedCharacter;
+  /// **'Отец'**
+  String get father;
 
   /// No description provided for @unknown.
   ///

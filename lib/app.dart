@@ -8,7 +8,7 @@ import 'common/theme/app_theme.dart';
 import 'common/theme/theme_cubit.dart';
 import 'features/character/data/character_repository.dart';
 import 'features/character/domain/i_character_repository.dart';
-import 'features/character/presentation/list/character_list_cubit.dart';
+import 'features/character/presentation/bloc/list/character_list_cubit.dart';
 import 'l10n/app_localizations.dart';
 
 class GameOfThronesApp extends StatelessWidget {

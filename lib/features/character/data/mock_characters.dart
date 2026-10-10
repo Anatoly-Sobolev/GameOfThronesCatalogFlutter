@@ -40,6 +40,7 @@ const mockCharacters = <CharacterModel>[
     titles: [],
     aliases: ['Arry', 'Cat of the Canals', 'No One'],
     playedBy: ['Maisie Williams'],
+    fatherId: 9,
   ),
   CharacterModel(
     id: 5,
@@ -50,6 +51,7 @@ const mockCharacters = <CharacterModel>[
     titles: ['Queen in the North', 'Lady of Winterfell'],
     aliases: ['Little Bird', 'Alayne Stone'],
     playedBy: ['Sophie Turner'],
+    fatherId: 9,
   ),
   CharacterModel(
     id: 6,
@@ -60,6 +62,7 @@ const mockCharacters = <CharacterModel>[
     titles: ['King of the Andals and the First Men'],
     aliases: ['Bran the Broken', 'The Three-Eyed Raven'],
     playedBy: ['Isaac Hempstead Wright'],
+    fatherId: 9,
   ),
   CharacterModel(
     id: 7,
@@ -110,6 +113,7 @@ const mockCharacters = <CharacterModel>[
     titles: ['King in the North'],
     aliases: ['The Young Wolf'],
     playedBy: ['Richard Madden'],
+    fatherId: 9,
   ),
   CharacterModel(
     id: 12,
@@ -120,6 +124,7 @@ const mockCharacters = <CharacterModel>[
     titles: ['King of the Andals and the First Men'],
     aliases: [],
     playedBy: ['Jack Gleeson'],
+    fatherId: 8,
   ),
   CharacterModel(
     id: 13,

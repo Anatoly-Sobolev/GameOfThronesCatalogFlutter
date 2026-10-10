@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/i_character_repository.dart';
+import '../../../domain/i_character_repository.dart';
 import 'character_detail_state.dart';
 
 class CharacterDetailCubit extends Cubit<CharacterDetailState> {
@@ -15,15 +15,15 @@ class CharacterDetailCubit extends Cubit<CharacterDetailState> {
       return;
     }
 
-    final allCharacters = _repository.getCharacters();
-    final index = allCharacters.indexWhere((item) => item.id == id);
-    final relatedIndex = (index + 1) % allCharacters.length;
+    final father = character.fatherId == null
+        ? null
+        : _repository.getCharacterById(character.fatherId!);
 
     emit(
       CharacterDetailState(
         status: CharacterDetailStatus.success,
         character: character,
-        relatedCharacter: allCharacters[relatedIndex],
+        father: father,
       ),
     );
   }

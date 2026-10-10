@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/app_scaffold.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/character_model.dart';
-import '../detail/character_detail_cubit.dart';
-import '../detail/character_detail_state.dart';
+import '../bloc/detail/character_detail_cubit.dart';
+import '../bloc/detail/character_detail_state.dart';
 import 'widgets/character_avatar.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
@@ -73,10 +73,10 @@ class CharacterDetailScreen extends StatelessWidget {
                 value: _listOrUnknown(character.playedBy, strings.unknown),
               ),
               const SizedBox(height: 20),
-              if (state.relatedCharacter != null)
+              if (state.father != null)
                 _RelatedCharacterCard(
-                  character: state.relatedCharacter!,
-                  title: strings.relatedCharacter,
+                  character: state.father!,
+                  title: strings.father,
                 ),
             ],
           ),

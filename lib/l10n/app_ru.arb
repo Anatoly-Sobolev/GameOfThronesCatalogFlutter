@@ -10,7 +10,7 @@
   "gender": "Пол",
   "born": "Родился",
   "playedBy": "Актёр",
-  "relatedCharacter": "Связанный персонаж",
+  "father": "Отец",
   "unknown": "Неизвестно",
   "male": "Мужской",
   "female": "Женский",

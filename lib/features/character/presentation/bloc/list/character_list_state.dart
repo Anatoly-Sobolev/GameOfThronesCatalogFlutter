@@ -1,4 +1,4 @@
-import '../../domain/character_model.dart';
+import '../../../domain/character_model.dart';
 
 enum CharacterListStatus { initial, loading, success }
 

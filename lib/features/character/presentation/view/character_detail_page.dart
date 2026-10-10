@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/i_character_repository.dart';
-import '../detail/character_detail_cubit.dart';
+import '../bloc/detail/character_detail_cubit.dart';
 import 'character_detail_screen.dart';
 
 class CharacterDetailPage extends StatelessWidget {

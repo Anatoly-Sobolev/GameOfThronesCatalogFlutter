@@ -8,6 +8,7 @@ class CharacterModel {
     required this.titles,
     required this.aliases,
     required this.playedBy,
+    this.fatherId,
   });
 
   final int id;
@@ -18,4 +19,5 @@ class CharacterModel {
   final List<String> titles;
   final List<String> aliases;
   final List<String> playedBy;
+  final int? fatherId;
 }
