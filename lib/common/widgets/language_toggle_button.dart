@@ -16,7 +16,7 @@ class LanguageToggleButton extends StatelessWidget {
       onPressed: context.read<LocaleCubit>().toggle,
       tooltip: strings.changeLanguage,
       icon: Text(
-        locale.languageCode == 'ru' ? 'EN' : 'RU',
+        locale.languageCode.toUpperCase(),
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
