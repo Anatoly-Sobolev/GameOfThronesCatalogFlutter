@@ -1,0 +1,19 @@
+{
+  "appTitle": "Персонажи Игры престолов",
+  "searchHint": "Поиск по имени",
+  "nothingFound": "Ничего не найдено",
+  "tryAnotherQuery": "Попробуйте изменить запрос",
+  "characterNotFound": "Персонаж не найден",
+  "aliases": "Прозвища",
+  "titles": "Титулы",
+  "culture": "Культура",
+  "gender": "Пол",
+  "born": "Родился",
+  "playedBy": "Актёр",
+  "father": "Отец",
+  "unknown": "Неизвестно",
+  "male": "Мужской",
+  "female": "Женский",
+  "changeTheme": "Сменить тему",
+  "changeLanguage": "Сменить язык"
+}
