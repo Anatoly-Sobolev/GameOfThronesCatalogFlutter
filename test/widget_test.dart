@@ -1,30 +1,65 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:game_of_thrones_catalog/main.dart';
+import 'package:game_of_thrones_catalog/app.dart';
+import 'package:game_of_thrones_catalog/common/navigation/app_router.dart';
+import 'package:game_of_thrones_catalog/features/character/data/character_repository.dart';
+import 'package:game_of_thrones_catalog/features/character/presentation/bloc/detail/character_detail_cubit.dart';
+import 'package:game_of_thrones_catalog/features/character/presentation/bloc/detail/character_detail_state.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('shows and filters characters', (tester) async {
+    await tester.pumpWidget(
+      const GameOfThronesApp(initialLocale: Locale('ru')),
+    );
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Jon Snow'), findsOneWidget);
+    expect(find.text('Daenerys Targaryen'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.enterText(find.byType(TextField), 'Arya');
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Arya Stark'), findsOneWidget);
+    expect(find.text('Jon Snow'), findsNothing);
+  });
+
+  testWidgets('updates localized titles after locale change', (tester) async {
+    await tester.pumpWidget(
+      const GameOfThronesApp(initialLocale: Locale('ru')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Персонажи Игры престолов'), findsOneWidget);
+
+    await tester.tap(find.text('EN'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Game of Thrones characters'), findsOneWidget);
+  });
+
+  testWidgets('shows not found screen for invalid character id', (
+    tester,
+  ) async {
+    appRouter.go('/characters/abc');
+    addTearDown(() => appRouter.go('/'));
+
+    await tester.pumpWidget(
+      const GameOfThronesApp(initialLocale: Locale('ru')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Персонаж не найден'), findsWidgets);
+  });
+
+  test('loads a real father relation from the model', () async {
+    final cubit = CharacterDetailCubit(CharacterRepository());
+    await cubit.load(5);
+    final state = cubit.state as CharacterDetailLoaded;
+
+    expect(state.character.name, 'Sansa Stark');
+    expect(state.father?.name, 'Eddard Stark');
+
+    await cubit.close();
   });
 }
