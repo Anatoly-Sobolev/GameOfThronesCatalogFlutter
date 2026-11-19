@@ -97,18 +97,43 @@ class _CharacterListContent extends StatelessWidget {
           ],
         ),
       ),
-      CharacterListLoaded(:final characters) => ListView.separated(
-        key: const PageStorageKey('character-list'),
-        itemCount: characters.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 12),
-        itemBuilder: (context, index) {
-          final character = characters[index];
-          return CharacterCard(
-            key: ValueKey(character.id),
-            character: character,
-          );
-        },
+      CharacterListError() => Center(
+        child: TextButton(
+          onPressed: context.read<CharacterListCubit>().load,
+          child: Text(strings.retryLoad),
+        ),
       ),
+      CharacterListLoaded(:final characters, :final more, :final failed) =>
+        ListView.separated(
+          key: const PageStorageKey('character-list'),
+          itemCount: characters.length + (more ? 1 : 0),
+          separatorBuilder: (context, index) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            if (index == characters.length) {
+              final cubit = context.read<CharacterListCubit>();
+              if (!failed) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (!cubit.isClosed && identical(cubit.state, state)) {
+                    cubit.more();
+                  }
+                });
+              }
+              return Center(
+                child: failed
+                    ? TextButton(
+                        onPressed: cubit.more,
+                        child: Text(strings.retryLoad),
+                      )
+                    : const CircularProgressIndicator(),
+              );
+            }
+            final character = characters[index];
+            return CharacterCard(
+              key: ValueKey(character.id),
+              character: character,
+            );
+          },
+        ),
     };
   }
 }

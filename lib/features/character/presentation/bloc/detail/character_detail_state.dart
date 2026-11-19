@@ -20,3 +20,8 @@ final class CharacterDetailNotFound extends CharacterDetailState {
 
   final int id;
 }
+
+final class CharacterDetailError extends CharacterDetailState {
+  const CharacterDetailError(this.id);
+  final int id;
+}

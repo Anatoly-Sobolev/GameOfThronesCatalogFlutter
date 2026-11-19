@@ -1,28 +1,67 @@
+import 'package:dio/dio.dart';
+
 import '../domain/character_model.dart';
 import '../domain/i_character_repository.dart';
-import 'mock_characters.dart';
 
 class CharacterRepository implements ICharacterRepository {
-  @override
-  Future<List<CharacterModel>> getCharacters({String query = ''}) async {
-    final normalizedQuery = query.trim().toLowerCase();
-    if (normalizedQuery.isEmpty) {
-      return mockCharacters;
-    }
+  final _client = Dio(
+    BaseOptions(
+      baseUrl: 'https://anapioficeandfire.com/api/',
+      connectTimeout: const Duration(seconds: 12),
+      receiveTimeout: const Duration(seconds: 15),
+    ),
+  );
 
-    return [
-      for (final character in mockCharacters)
-        if (character.name.toLowerCase().contains(normalizedQuery)) character,
-    ];
+  CharacterModel _decode(Map<String, dynamic> row) {
+    List<String> strings(String key) => (row[key] as List)
+        .cast<String>()
+        .where((value) => value.isNotEmpty)
+        .toList();
+    int? id(String url) => int.tryParse(url.split('/').last);
+    final name = row['name'] as String;
+    final aliases = strings('aliases');
+    final characterId = id(row['url'] as String)!;
+    return CharacterModel(
+      id: characterId,
+      name: name.isNotEmpty ? name : aliases.firstOrNull ?? '#$characterId',
+      gender: row['gender'],
+      culture: row['culture'],
+      born: row['born'],
+      titles: strings('titles'),
+      aliases: aliases,
+      playedBy: strings('playedBy'),
+      fatherId: id(row['father'] as String),
+    );
+  }
+
+  @override
+  Future<List<CharacterModel>> getCharacters({
+    String query = '',
+    int page = 1,
+  }) async {
+    final response = await _client.get<List>(
+      'characters',
+      queryParameters: {
+        'page': page,
+        'pageSize': 20,
+        if (query.trim().isNotEmpty) 'name': query.trim(),
+      },
+    );
+    return response.data!.cast<Map<String, dynamic>>().map(_decode).toList();
   }
 
   @override
   Future<CharacterModel?> getCharacterById(int id) async {
-    for (final character in mockCharacters) {
-      if (character.id == id) {
-        return character;
-      }
+    try {
+      final response = await _client.get<Map<String, dynamic>>(
+        'characters/$id',
+      );
+      return _decode(response.data!);
+    } on DioException catch (error) {
+      if (error.response?.statusCode == 404) return null;
+      rethrow;
     }
-    return null;
   }
+
+  void close() => _client.close(force: true);
 }
