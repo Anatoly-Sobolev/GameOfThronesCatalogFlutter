@@ -24,7 +24,7 @@ class GameOfThronesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<ICharacterRepository>(
-      create: (context) => repository ?? CharacterRepository(),
+      create: (context) => repository ?? CharacterRepository.network(),
       dispose: (value) {
         if (repository == null) (value as CharacterRepository).close();
       },

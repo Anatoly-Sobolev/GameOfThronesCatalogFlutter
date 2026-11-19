@@ -38,6 +38,7 @@ class CharacterListCubit extends Cubit<CharacterListState> {
   ) async {
     if (_busy) return;
     _busy = true;
+    if (previous.isEmpty) emit(CharacterListLoading(query: query));
     try {
       final page = await _repository.getCharacters(query: query, page: _page);
       if (isClosed || generation != _generation) return;
