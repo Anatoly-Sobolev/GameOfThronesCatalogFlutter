@@ -15,5 +15,6 @@
   "male": "Male",
   "female": "Female",
   "changeTheme": "Change theme",
-  "changeLanguage": "Change language"
+  "changeLanguage": "Change language",
+  "retryLoad": "Loading failed. Retry"
 }

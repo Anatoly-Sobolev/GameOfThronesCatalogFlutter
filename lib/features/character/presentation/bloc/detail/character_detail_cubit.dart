@@ -10,24 +10,29 @@ class CharacterDetailCubit extends Cubit<CharacterDetailState> {
   final ICharacterRepository _repository;
 
   Future<void> load(int id) async {
-    final character = await _repository.getCharacterById(id);
-    if (character == null) {
+    emit(const CharacterDetailLoading());
+    try {
+      final character = await _repository.getCharacterById(id);
+      if (character == null) {
+        if (isClosed) {
+          return;
+        }
+        emit(CharacterDetailNotFound(id));
+        return;
+      }
+
+      final fatherId = character.fatherId;
+      final father = fatherId == null
+          ? null
+          : await _repository.getCharacterById(fatherId);
+
       if (isClosed) {
         return;
       }
-      emit(CharacterDetailNotFound(id));
-      return;
+
+      emit(CharacterDetailLoaded(character, father: father));
+    } catch (_) {
+      if (!isClosed) emit(CharacterDetailError(id));
     }
-
-    final fatherId = character.fatherId;
-    final father = fatherId == null
-        ? null
-        : await _repository.getCharacterById(fatherId);
-
-    if (isClosed) {
-      return;
-    }
-
-    emit(CharacterDetailLoaded(character, father: father));
   }
 }

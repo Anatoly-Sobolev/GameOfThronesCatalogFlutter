@@ -12,14 +12,22 @@ import 'features/character/presentation/bloc/list/character_list_cubit.dart';
 import 'l10n/app_localizations.dart';
 
 class GameOfThronesApp extends StatelessWidget {
-  const GameOfThronesApp({required this.initialLocale, super.key});
+  const GameOfThronesApp({
+    required this.initialLocale,
+    this.repository,
+    super.key,
+  });
 
   final Locale initialLocale;
+  final ICharacterRepository? repository;
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<ICharacterRepository>(
-      create: (context) => CharacterRepository(),
+      create: (context) => repository ?? CharacterRepository.network(),
+      dispose: (value) {
+        if (repository == null) (value as CharacterRepository).close();
+      },
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ThemeCubit()),

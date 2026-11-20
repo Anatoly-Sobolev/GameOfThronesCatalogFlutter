@@ -199,6 +199,12 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Сменить язык'**
   String get changeLanguage;
+
+  /// No description provided for @retryLoad.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка загрузки. Повторить'**
+  String get retryLoad;
 }
 
 class _AppLocalizationsDelegate

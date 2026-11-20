@@ -15,5 +15,6 @@
   "male": "Мужской",
   "female": "Женский",
   "changeTheme": "Сменить тему",
-  "changeLanguage": "Сменить язык"
+  "changeLanguage": "Сменить язык",
+  "retryLoad": "Ошибка загрузки. Повторить"
 }

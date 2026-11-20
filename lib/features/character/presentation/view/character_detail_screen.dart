@@ -24,6 +24,16 @@ class CharacterDetailScreen extends StatelessWidget {
           showBackButton: true,
           body: const Center(child: CircularProgressIndicator()),
         ),
+        CharacterDetailError(:final id) => AppScaffold(
+          title: strings.appTitle,
+          showBackButton: true,
+          body: Center(
+            child: TextButton(
+              onPressed: () => context.read<CharacterDetailCubit>().load(id),
+              child: Text(strings.retryLoad),
+            ),
+          ),
+        ),
         CharacterDetailNotFound() => AppScaffold(
           title: strings.characterNotFound,
           showBackButton: true,
